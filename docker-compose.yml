@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./conf:/etc/nginx/conf.d/
+      - ./vhost.d:/etc/nginx/vhost.d/
+      - ./certs:/etc/nginx/certs
+      - ./proxy.conf:/etc/nginx/proxy.conf
+    networks:
+      - proxynet
+networks:
+  proxynet:
+    name: proxynet
